@@ -54,8 +54,6 @@ const Accordian: AccordianComposition & React.FC<AccordianType> = ({
     }
   });
 
-  // props has bland
-
   return (
     <div>
       <>{children}</>
