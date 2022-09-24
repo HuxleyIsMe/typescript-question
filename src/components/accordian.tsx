@@ -19,8 +19,9 @@ const isAccordianElement = (
 
 type FunAccordian = {
   type: "fun";
-  //   children: React.ReactNode;
-  children: typeof ColourfulPage | typeof ColourfulPage[];
+  children: React.ReactNode;
+  // uncommenting these cause a react node vs react element issue
+  // children: typeof ColourfulPage | typeof ColourfulPage[];
 };
 type BlandAccordian = {
   type: "bland";
@@ -44,11 +45,12 @@ const Accordian: AccordianComposition & React.FC<AccordianType> = ({
   children,
 }) => {
   /** here i can detect this manually however i want ts giving me errors */
-  React.Children.map(children as any, (child) => {
-    console.log({ child });
+  React.Children.map(children, (child) => {
     const typeName = (child as ChildWithTypeName)?.type?.name;
     if (!isAccordianElement(typeName)) {
-      console.log("This is invalid", typeName);
+      throw new Error(
+        `Accordian can only accept a Colour ful page or a boring page ${typeName}`
+      );
     }
   });
 
